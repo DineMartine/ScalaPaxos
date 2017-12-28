@@ -1,6 +1,7 @@
 package org.piquerez.scalapaxos.paxos
 
-import org.piquerez.scalapaxos.{InternalSystem, Process}
+import org.piquerez.scalapaxos.InternalSystem
+import org.piquerez.scalapaxos.Process
 
 /**
   * Created by Adrien on 12/30/2016.

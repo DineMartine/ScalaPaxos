@@ -1,6 +1,8 @@
 package org.piquerez.scalapaxos.naive
 
-import org.piquerez.scalapaxos.{InternalSystem, Process}
+import org.piquerez.scalapaxos.InternalSystem
+import org.piquerez.scalapaxos.Process
+
 /**
   * Created by Adrien on 11/17/2016.
   */

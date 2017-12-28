@@ -9,6 +9,6 @@ import org.scalacheck.{Arbitrary, Gen, Properties}
   */
 class PaxosProperties extends Properties("Paxos Properties") with ConsensusProperties {
   override val arbitrarySystem: Arbitrary[System[Int]] = Arbitrary {
-    Gen.sized(s => PaxosSystem[Int](s))
+    Gen.sized(s => PaxosSystem[Int](s + 1))
   }
 }

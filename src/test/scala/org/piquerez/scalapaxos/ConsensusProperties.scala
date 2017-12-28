@@ -12,7 +12,7 @@ trait ConsensusProperties extends Properties {
   }
 
   property("OnlyOneValueCanBeChosen") = forAll {
-    (testCase : ConsensusTestCase) => testCase.chosenValues.size == 1
+    (testCase : ConsensusTestCase) => testCase.chosenValues.size <= 1
   }
 
   val arbitrarySystem : Arbitrary[System[Int]]
@@ -25,8 +25,8 @@ trait ConsensusProperties extends Properties {
   }
 
   class ConsensusTestCase(system : System[Int], proposals : Iterable[(Int, Int)]) {
-    def execute() { proposals.foreach{ case (i, v) => system.Processes(i).Propose(v) } }
-    def proposedValues: Set[Int] = proposals.map{ case (i,v) => v }.toSet
+    proposals.foreach{ case (i, v) => system.Processes(i).Propose(v) }
+    def proposedValues: Set[Int] = proposals.map{ case (_,v) => v }.toSet
     def chosenValues : Set[Int] = system.Processes.filter(_.IsValueChosen).map(_.Value).toSet
   }
 }

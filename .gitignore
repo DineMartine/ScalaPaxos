@@ -1,2 +1,5 @@
+target/
+project/boot/
+project/plugins/project/
 out/
 .idea/
