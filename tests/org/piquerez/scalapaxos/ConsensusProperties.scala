@@ -8,17 +8,17 @@ import org.scalacheck.{Arbitrary, Gen, Properties}
   */
 trait ConsensusProperties extends Properties {
   property("OnlyProposedValuesAreChosen") = forAll {
-    (testCase: ConsensusTestCase) => testCase.proposedValues.forall(testCase.chosenValues.contains(_))
+    (testCase: ConsensusTestCase) => testCase.chosenValues.forall(testCase.proposedValues.contains(_))
   }
 
   property("OnlyOneValueCanBeChosen") = forAll {
     (testCase : ConsensusTestCase) => testCase.chosenValues.size == 1
   }
 
-  implicit val arbitrarySystem : Arbitrary[System[Int]]
+  val arbitrarySystem : Arbitrary[System[Int]]
 
-  implicit val arbitraryTestCase = Arbitrary {
-    def arbitraryProposals(system : System[Int]) = {
+  implicit val arbitraryTestCase: Arbitrary[ConsensusTestCase] = Arbitrary {
+    def arbitraryProposals(system : System[Int]): Gen[List[(Int, Int)]] = {
       Gen.listOf(Gen.choose(0, system.Processes.size - 1).flatMap(p => Arbitrary.arbitrary[Int].map(v => (p, v))))
     }
     arbitrarySystem.arbitrary.flatMap(s => arbitraryProposals(s).map(p => new ConsensusTestCase(s, p)))
@@ -27,6 +27,6 @@ trait ConsensusProperties extends Properties {
   class ConsensusTestCase(system : System[Int], proposals : Iterable[(Int, Int)]) {
     def execute() { proposals.foreach{ case (i, v) => system.Processes(i).Propose(v) } }
     def proposedValues: Set[Int] = proposals.map{ case (i,v) => v }.toSet
-    def chosenValues = system.Processes.filter(_.IsValueChosen).map(_.Value).toSet
+    def chosenValues : Set[Int] = system.Processes.filter(_.IsValueChosen).map(_.Value).toSet
   }
 }
