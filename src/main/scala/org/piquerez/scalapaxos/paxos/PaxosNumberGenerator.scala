@@ -9,7 +9,7 @@ trait PaxosNumberGenerator {
 
 class SequentialNumberGenerator extends PaxosNumberGenerator {
   var iterator : Int = 0
-  override def Generate = {
+  override def Generate: Int = {
     iterator = iterator + 1
     iterator
   }

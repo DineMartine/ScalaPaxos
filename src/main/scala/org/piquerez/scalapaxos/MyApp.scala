@@ -7,14 +7,15 @@ import org.piquerez.scalapaxos.naive.NaiveSystem
   */
 object MyApp {
   def main(args: Array[String]) = {
-    val system = NaiveSystem[String](5)
-    system.Processes(0).Propose("a")
-    system.Processes(1).Propose("b")
-    system.Processes(2).Propose("c")
-    system.Processes(3).Propose("d")
-    system.Processes(4).Propose("e")
-    if(system.Processes.forall(_.IsValueChosen))
-      for(p <- system.Processes) println(p.Value)
+    val system = NaiveSystem.async[String](5)
+    system.processes(0).propose("a")
+    system.processes(1).propose("b")
+    system.processes(2).propose("c")
+    system.processes(3).propose("d")
+    system.processes(4).propose("e")
+    Thread.sleep(2)
+    if(system.processes.forall(_.isValueChosen))
+      for(p <- system.processes) println(p.value)
     else
       println("Hello, World!")
   }

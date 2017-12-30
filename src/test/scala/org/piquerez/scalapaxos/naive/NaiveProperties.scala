@@ -12,3 +12,9 @@ class NaiveProperties extends Properties("Naive Properties") with ConsensusPrope
     Gen.sized(s => NaiveSystem[Int](s + 1))
   }
 }
+
+class AsyncNaiveProperties extends Properties("Async Naive Properties") with ConsensusProperties {
+  override val arbitrarySystem: Arbitrary[System[Int]] = Arbitrary {
+    Gen.sized(s => NaiveSystem.async[Int](s + 1))
+  }
+}

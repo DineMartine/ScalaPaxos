@@ -12,3 +12,9 @@ class PaxosProperties extends Properties("Paxos Properties") with ConsensusPrope
     Gen.sized(s => PaxosSystem[Int](s + 1))
   }
 }
+
+class AsyncPaxosProperties extends Properties("Async Paxos Properties") with ConsensusProperties {
+  override val arbitrarySystem: Arbitrary[System[Int]] = Arbitrary {
+    Gen.sized(s => PaxosSystem.async[Int](s + 1))
+  }
+}
